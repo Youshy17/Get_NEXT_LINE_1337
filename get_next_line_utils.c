@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:22 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/12 12:53:20 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:25:20 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ptr[ptr_count++] = s2[i++];
 	ptr[ptr_count] = '\0';
 	return (ptr);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	unsigned char	cc;
+
+	if (str == NULL)
+		return (NULL);
+	cc = (unsigned char) c;
+	while (*str)
+	{
+		if ((unsigned char) *str == cc)
+			return ((char *)(str));
+		else
+			str++;
+	}
+	if (cc == '\0' && *str == '\0')
+		return ((char *)(str));
+	else
+		return (NULL);
 }
