@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:06:36 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/13 09:25:37 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:25:00 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-#define BUFFER_SIZE 17
+#define BUFFER_SIZE 12
 
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);

@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:22 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/13 12:25:20 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:00:33 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	count;
 
+	if (s == NULL)
+		return (0);
 	count = 0;
 	while (s[count])
 		count++;

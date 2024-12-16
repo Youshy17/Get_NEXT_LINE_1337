@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:19 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/13 14:29:04 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:17:16 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,58 +23,83 @@ char	*allocate(int size)
 	return (str);
 }
 
-int	new_line_check(char *str)
+char *line_to_return(char	*line)
 {
-	int	i;
+	char	*ret;
+	int		i;
+	int		j;
 
+	if(!line)
+		return (NULL);
 	i = 0;
-	while (str[i] != '\n')
+	while (line[i] && line[i] != '\n')
 		i++;
-	if (str[i] == '\n')
-		return (i);
-	else
-		return (0);
-		
+	ret = malloc((i + 1) * sizeof(char));
+	if (!ret)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		ret[j] = line[j];
+		j++;
+	}
+	ret[j] = '\0';
+	return (ret);
+}
+
+char *remaining_of_line(char *line)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*str_temp;
+
+	len = ft_strlen(line);
+	if (!ft_strchr(line, '\n'))
+	{
+		free(line);
+		return (NULL);
+	}
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	str_temp = malloc((len - i + 1) * sizeof(char));
+	i++;
+	j = 0;
+	while (line[i + j])
+	{
+		str_temp[j] = line[i + j];
+		j++;
+	}
+	str_temp[j] = '\0';
+	free(line);
+	return (str_temp);
 }
 
 char *get_next_line(int fd)
 {
-	char		*line;
-	static char	*temp;
+	static char		*line;
+	char		*temp;
+	char		*ret;
 	int			read_return;
 
-	line = allocate(0);
-	if (ft_strchr(temp, '\n'))
-		line = ft_strjoin(line, ft_strchr(temp, '\n') + 1);
-	else
-		temp = allocate((int)BUFFER_SIZE);
 	temp = allocate((int)BUFFER_SIZE);
 	read_return = 1;
-	while (read_return > 0)
+	while (!ft_strchr(line, '\n') && read_return > 0)
 	{
 		read_return = read(fd, temp, BUFFER_SIZE);
-		if (read_return = 0)
+		if (read_return == 0)
 			break;
 		if (read_return < 0)
-			free(line); // free everything
-		if (ft_strchr(temp, '\n') != NULL)
 		{
-			int i = 0;
-			unsigned char c;
-			while (temp[i] != '\n')
-				i++;
-			c = temp[i+1];
-			temp[i+1] = '\0';
-			line = ft_strjoin(line, temp);
-			temp[i+1] = c;
-			break;
+			free(temp);
+            return (NULL);
 		}
-		else
-			line = ft_strjoin(line, temp);
+		line = ft_strjoin(line, temp);
 	}
-	if (temp == NULL)
-		free(temp);
-	return (line);
+	ret = line_to_return(line);
+	line = remaining_of_line(line);
+	return (ret);
 }
 
 int main ()
@@ -85,12 +110,12 @@ int main ()
         return (0);
 	
     char *s = get_next_line(fd);
-    printf("%s", s);
+    printf("return 1 is : %s\n", s);
 
 	s = get_next_line(fd);
-    printf("%s", s);
+    printf("return 2 is : %s\n", s);
 	
-	printf("\n");
-
+	s = get_next_line(fd);
+    printf("return 3 is : %s\n", s);
     free(s);
 }
