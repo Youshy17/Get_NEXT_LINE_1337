@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:22 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/16 11:00:33 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:17:41 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ char	*ft_strchr(const char *str, int c)
 
 	if (str == NULL)
 		return (NULL);
-	cc = (unsigned char) c;
+	cc = (unsigned char)c;
 	while (*str)
 	{
-		if ((unsigned char) *str == cc)
+		if ((unsigned char)*str == cc)
 			return ((char *)(str));
 		else
 			str++;
