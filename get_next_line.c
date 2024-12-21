@@ -6,7 +6,7 @@
 /*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:19 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/17 14:35:57 by yel-hamr         ###   ########.fr       */
+/*   Updated: 2024/12/21 14:26:16 by yel-hamr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,33 @@ char	*line_to_return(char *line)
 
 char	*remaining_of_line(char *line)
 {
+	char	*remaining;
+	int		len;
 	int		i;
 	int		j;
-	int		len;
-	char	*str_temp;
 
 	len = ft_strlen(line);
-	if (!ft_strchr(line, '\n'))
-	{
-		free(line);
+	if (line == NULL)
 		return (NULL);
-	}
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	str_temp = malloc((len - i + 1) * sizeof(char));
+	if (line[i] == '\0')
+    {
+        free(line);
+        return (NULL);
+    }
+	remaining = malloc((len - i + 1) * sizeof(char));
 	i++;
 	j = 0;
 	while (line[i + j])
 	{
-		str_temp[j] = line[i + j];
+		remaining[j] = line[i + j];
 		j++;
 	}
-	str_temp[j] = '\0';
+	remaining[j] = '\0';
 	free(line);
-	return (str_temp);
+	return (remaining);
 }
 
 char	*get_next_line(int fd)
@@ -87,8 +89,10 @@ char	*get_next_line(int fd)
 			free(temp);
 			return (NULL);
 		}
+		temp[read_return] = '\0';
 		line = ft_strjoin(line, temp);
 	}
+	free(temp);
 	ret = line_to_return(line);
 	line = remaining_of_line(line);
 	return (ret);
