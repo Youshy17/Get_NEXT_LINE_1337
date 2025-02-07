@@ -18,10 +18,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFFER_SIZE 12
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 17
+# endif
 
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *str, int c);
+char	*get_next_line(int fd);
 
 #endif

@@ -23,7 +23,7 @@ char	*line_to_return(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	ret = malloc((i + 1) * sizeof(char));
+	ret = malloc((i + 2) * sizeof(char));
 	if (!ret)
 		return (NULL);
 	j = 0;
@@ -72,6 +72,7 @@ char	*get_next_line(int fd)
 	static char	*line;
 	char		*temp;
 	char		*ret;
+	char		*t_line;
 	int			read_return;
 
 	temp = malloc(sizeof(char) * ((int)BUFFER_SIZE + 1));
@@ -90,7 +91,9 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 		temp[read_return] = '\0';
+		t_line = line;
 		line = ft_strjoin(line, temp);
+		free(t_line);
 	}
 	free(temp);
 	ret = line_to_return(line);
@@ -106,7 +109,7 @@ int	main(void)
 
 	char *s;
 	int i = 0;
-	while (i < 5)
+	while (i < 3)
 	{
 		s = get_next_line(fd);
 		if (s)
