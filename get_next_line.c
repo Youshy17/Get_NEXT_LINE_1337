@@ -43,19 +43,26 @@ char	*remaining_of_line(char *line)
 	int		i;
 	int		j;
 
-	len = ft_strlen(line);
 	if (line == NULL)
 		return (NULL);
+	len = ft_strlen(line);
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
 	if (line[i] == '\0')
-    {
-        free(line);
-        return (NULL);
-    }
-	remaining = malloc((len - i + 1) * sizeof(char));
+	{
+		free(line);
+		return (NULL);
+	}
 	i++;
+	if (line[i] == '\0')
+	{
+		free(line);
+		return (NULL);
+	}
+	remaining = malloc((len - i + 1) * sizeof(char));
+	if (!remaining)
+		return (NULL);
 	j = 0;
 	while (line[i + j])
 	{
@@ -67,6 +74,7 @@ char	*remaining_of_line(char *line)
 	return (remaining);
 }
 
+
 char	*get_next_line(int fd)
 {
 	static char	*line;
@@ -75,14 +83,13 @@ char	*get_next_line(int fd)
 	char		*t_line;
 	int			read_return;
 
-	temp = malloc(sizeof(char) * ((int)BUFFER_SIZE + 1));
+	temp = malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (!temp)
 		return (NULL);
-	temp[(int)BUFFER_SIZE] = '\0';
 	read_return = 1;
 	while (!ft_strchr(line, '\n') && read_return > 0)
 	{
-		read_return = read(fd, temp, BUFFER_SIZE);
+		read_return = read(fd, temp, (size_t)BUFFER_SIZE);
 		if (read_return == 0)
 			break ;
 		if (read_return < 0)
@@ -100,7 +107,7 @@ char	*get_next_line(int fd)
 	line = remaining_of_line(line);
 	return (ret);
 }
-
+/*
 int	main(void)
 {
 	int fd = open("test.txt", O_RDONLY | O_CREAT, 0644);
@@ -121,4 +128,4 @@ int	main(void)
 	
 	free(s);
 	close(fd);
-}
+}*/
