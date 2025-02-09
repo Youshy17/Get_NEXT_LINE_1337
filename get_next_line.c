@@ -66,17 +66,12 @@ char	*remaining_of_line(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	if (line[i] == '\0')
+	if (line[i] == '\0' || line[i + 1] == '\0')
 	{
 		free(line);
 		return (NULL);
 	}
 	i++;
-	if (line[i] == '\0')
-	{
-		free(line);
-		return (NULL);
-	}
 	remaining = remaining_of_line_bis(line, len, i);
 	free(line);
 	return (remaining);
@@ -100,6 +95,7 @@ char	*get_next_line_bis(int fd, char **line)
 		if (read_return < 0)
 		{
 			free(temp);
+			free(*line);
 			return (NULL);
 		}
 		temp[read_return] = '\0';
@@ -107,8 +103,7 @@ char	*get_next_line_bis(int fd, char **line)
 		*line = ft_strjoin(*line, temp);
 		free(t_line);
 	}
-	free(temp);
-	return (*line);
+	return (free(temp), *line);
 }
 
 char	*get_next_line(int fd)
@@ -125,37 +120,3 @@ char	*get_next_line(int fd)
 	line = remaining_of_line(line);
 	return (ret);
 }
-/*
-int	main(void)
-{
-	char *s;
-	s = get_next_line(1);
-		if (s)
-			printf("line %s" ,s);
-		else
-			printf("line %s\n",s);
-	free(s);
-}
-
-
-int	main(void)
-{
-	int fd = open("test.txt", O_RDONLY | O_CREAT, 0644);
-	if (fd == -1)
-		return (0);
-
-	char *s;
-	int i = 0;
-	while (i < 6)
-	{
-		s = get_next_line(fd);
-		if (s)
-			printf("line %d : %s",i ,s);
-		else
-			printf("line %d : %s\n",i ,s);
-		i++;
-		free(s);
-	}
-	
-	close(fd);
-}*/

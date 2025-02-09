@@ -66,17 +66,12 @@ char	*remaining_of_line(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
-	if (line[i] == '\0')
+	if (line[i] == '\0' || line[i + 1] == '\0')
 	{
 		free(line);
 		return (NULL);
 	}
 	i++;
-	if (line[i] == '\0')
-	{
-		free(line);
-		return (NULL);
-	}
 	remaining = remaining_of_line_bis(line, len, i);
 	free(line);
 	return (remaining);
@@ -100,6 +95,7 @@ char	*get_next_line_bis(int fd, char **line)
 		if (read_return < 0)
 		{
 			free(temp);
+			free(*line);
 			return (NULL);
 		}
 		temp[read_return] = '\0';
@@ -107,8 +103,7 @@ char	*get_next_line_bis(int fd, char **line)
 		*line = ft_strjoin(*line, temp);
 		free(t_line);
 	}
-	free(temp);
-	return (*line);
+	return (free(temp), *line);
 }
 
 char	*get_next_line(int fd)
