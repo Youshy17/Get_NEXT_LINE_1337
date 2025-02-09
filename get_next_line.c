@@ -6,7 +6,7 @@
 /*   By: youshy <youshy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 18:04:19 by yel-hamr          #+#    #+#             */
-/*   Updated: 2025/02/09 11:50:22 by youshy           ###   ########.fr       */
+/*   Updated: 2025/02/09 18:25:05 by youshy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,10 @@ char	*remaining_of_line(char *line)
 	while (line[i] && line[i] != '\n')
 		i++;
 	if (line[i] == '\0' || line[i + 1] == '\0')
-	{
-		free(line);
-		return (NULL);
-	}
+		return (free(line), line = NULL, NULL);
 	i++;
 	remaining = remaining_of_line_bis(line, len, i);
-	free(line);
-	return (remaining);
+	return (free(line), line = NULL, remaining);
 }
 
 char	*get_next_line_bis(int fd, char **line)
@@ -93,17 +89,14 @@ char	*get_next_line_bis(int fd, char **line)
 		if (read_return == 0)
 			break ;
 		if (read_return < 0)
-		{
-			free(temp);
-			free(*line);
-			return (NULL);
-		}
+			return (free(temp), temp = NULL, free(*line), *line = NULL, NULL);
 		temp[read_return] = '\0';
 		t_line = *line;
 		*line = ft_strjoin(*line, temp);
 		free(t_line);
+		t_line = NULL;
 	}
-	return (free(temp), *line);
+	return (free(temp), temp = NULL, *line);
 }
 
 char	*get_next_line(int fd)
