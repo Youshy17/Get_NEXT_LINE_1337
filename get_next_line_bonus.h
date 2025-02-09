@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yel-hamr <yel-hamr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youshy <youshy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 18:06:36 by yel-hamr          #+#    #+#             */
-/*   Updated: 2024/12/17 14:14:26 by yel-hamr         ###   ########.fr       */
+/*   Created: 2025/01/02 10:45:51 by youshy            #+#    #+#             */
+/*   Updated: 2025/02/09 11:49:51 by youshy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <fcntl.h>
 # include <stdio.h>

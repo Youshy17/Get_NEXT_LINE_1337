@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youshy <youshy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 18:04:19 by yel-hamr          #+#    #+#             */
-/*   Updated: 2025/02/09 11:50:22 by youshy           ###   ########.fr       */
+/*   Created: 2025/01/02 10:45:47 by youshy            #+#    #+#             */
+/*   Updated: 2025/02/09 11:52:08 by youshy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*line_to_return(char *line)
 {
@@ -113,49 +113,15 @@ char	*get_next_line_bis(int fd, char **line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[1024];
 	char		*ret;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = get_next_line_bis(fd, &line);
-	if (!line)
+	line[fd] = get_next_line_bis(fd, &line[fd]);
+	if (!line[fd])
 		return (NULL);
-	ret = line_to_return(line);
-	line = remaining_of_line(line);
+	ret = line_to_return(line[fd]);
+	line[fd] = remaining_of_line(line[fd]);
 	return (ret);
 }
-/*
-int	main(void)
-{
-	char *s;
-	s = get_next_line(1);
-		if (s)
-			printf("line %s" ,s);
-		else
-			printf("line %s\n",s);
-	free(s);
-}
-
-
-int	main(void)
-{
-	int fd = open("test.txt", O_RDONLY | O_CREAT, 0644);
-	if (fd == -1)
-		return (0);
-
-	char *s;
-	int i = 0;
-	while (i < 6)
-	{
-		s = get_next_line(fd);
-		if (s)
-			printf("line %d : %s",i ,s);
-		else
-			printf("line %d : %s\n",i ,s);
-		i++;
-		free(s);
-	}
-	
-	close(fd);
-}*/
